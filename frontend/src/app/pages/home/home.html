@@ -1,0 +1,11 @@
+<section class="hero">
+  <h2>Bem-vindo à FitoFarma, Bruno!</h2>
+</section>
+
+<div class="product-grid">
+  @for (item of productService.products(); track item.id) {
+    <app-product-card [product]="item"></app-product-card>
+  } @empty {
+    <p>Carregando produtos...</p>
+  }
+</div>

@@ -1,1 +1,16 @@
-<p>product-card works!</p>
+<div class="product-card">
+    <div class="image-container">
+        <img [src]="'http://localhost:8000/storage/' + product().main_photo" [alt]="product().name">
+    </div>
+    <div class="card-content">
+        <h3 class="product-title">{{ product().name }}</h3>
+        <div class="price-container">
+            <span class="currency">R$</span>
+            <span class="price-value">{{ product().price }}</span>
+        </div>
+        <button class="btn-more">
+            Ver mais
+            <span class="arrow">-></span>
+        </button>
+    </div>
+</div> 
