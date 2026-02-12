@@ -1,4 +1,36 @@
-<header class="main-header"></header>
+<header class="main-header">
+  <div class="header-top container">
+    <div class="logo">
+      <img src="assets\img\logo-fitofarma.jpg" alt="FitoFarma">
+    </div>
+    <div class="search-bar">
+      <i class="bi bi-search search-icon"></i>
+      <input type="text" placeholder="Pesquisar...">
+    </div>
+    <nav class="main-nav">
+      <a routerLink="/">HOME</a>
+      <a routerLink="/">QUEM SOMOS</a>
+      <a routerLink="/">CONTATO</a>
+    </nav>
+    <div class="user-profile">
+      <i class="bi bi-person-circle profile-icon"></i>
+      <div class="profile-text">
+        <span class="top-text">Acesse aqui</span>
+        <span class="top-text">Seu perfil</span>
+      </div>
+    </div>
+  </div>
+  <div class="category-bar">
+    <div class="container nav-categories">
+      <a href="#">OFERTAS</a>
+      <a href="#">EMAGRECIMENTO</a>
+      <a href="#">BELEZA</a>
+      <a href="#">SEU TREINO</a>
+      <a href="#">SAÚDE</a>
+      <a href="#">MAIS VENDIDOS</a>
+    </div>
+  </div>
+</header>
 
 <main>
   <router-outlet></router-outlet>
