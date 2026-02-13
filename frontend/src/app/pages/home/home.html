@@ -51,10 +51,12 @@
   </div>
 </section>
 
-<div class="product-grid">
-  @for (item of productService.products(); track item.id) {
+<div class="product-grid container">
+  @for (item of productService.products().slice(0, 8); track item.id) {
     <app-product-card [product]="item"></app-product-card>
   } @empty {
-    <p>Carregando produtos...</p>
+    <div class="loading-state">
+      <p>Buscando as melhores ofertas...</p>
+    </div>
   }
 </div>

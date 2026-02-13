@@ -7,7 +7,14 @@ import { isPlatformBrowser } from '@angular/common';
 export class AuthService {
   //Controla se o usuário esta logado
   private platformId = inject(PLATFORM_ID);
-  private isAuthenticated = signal<boolean>(false);
+  isAuthenticated = signal<boolean>(this.checkInitialAuth());
+
+  private checkInitialAuth(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('isLoggedIn') === 'true';
+    }
+    return false;
+  }
 
   login(credentials: any) {
     if (credentials.email === 'admin@fitofarma.com' && credentials.password === 'senha123') {

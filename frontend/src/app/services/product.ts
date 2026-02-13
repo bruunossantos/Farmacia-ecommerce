@@ -1,6 +1,6 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { tap, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +11,20 @@ export class ProductService {
 
   products = signal<any[]>([]);
 
-  async getProducts() {
-    const response = await firstValueFrom(this.http.get<any>(this.apiUrl));
-    this.products.set(response.data);
+  createProduct(product: any): Observable<any> {
+    return this.http.post(this.apiUrl, product);
+  }
+
+  getProducts() {
+    return this.http.get<any>(this.apiUrl).pipe(
+      tap((res) => {
+        const productList = res.data ? res.data : res;
+        this.products.set(productList);
+      }),
+    );
+  }
+
+  deleteProduct(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

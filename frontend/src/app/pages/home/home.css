@@ -1,7 +1,3 @@
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 .main-banner {
   position: relative;
@@ -58,4 +54,27 @@
   font-weight: 600;
   color: #005a32;
   text-align: center;
+}
+
+.product-grid {
+  display: grid;
+  /* Cria 4 colunas de tamanhos iguais */
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+
+/* Ajuste para telas menores (Responsividade) */
+@media (max-width: 992px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 por linha em tablets */
+  }
+}
+
+@media (max-width: 576px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* 1 por linha em celulares */
+  }
 }

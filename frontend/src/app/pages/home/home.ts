@@ -9,10 +9,13 @@ import { ProductCard } from '../../components/product-card/product-card';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class HomeComponent implements OnInit{
+
+export class HomeComponent implements OnInit {
   protected productService = inject(ProductService);
 
-    ngOnInit(): void {
-      this.productService.getProducts();
-    }
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe({
+      error: (err) => console.error('Erro ao carregar vitrine:', err)
+    });
+  }
 }

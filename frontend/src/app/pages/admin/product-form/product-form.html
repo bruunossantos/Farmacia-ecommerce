@@ -1,0 +1,80 @@
+<section class="container">
+  <div class="form-container">
+    <div class="form-header">
+      <h2>Cadastrar novo Produto</h2>
+    </div>
+    <form (ngSubmit)="saveProduct()" #productForm="ngForm">
+      <div class="form-group">
+        <label>Nome do Produto</label>
+        <input
+          type="text"
+          [(ngModel)]="product.name"
+          name="name"
+          required
+          #name="ngModel"
+          [class.invalid]="name.invalid && name.touched"
+          placeholder="Ex: Tylenol Paracetamol 750mg"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Descrição</label>
+        <textarea
+          [(ngModel)]="product.description"
+          name="description"
+          required
+          #desc="ngModel"
+          [class.invalid]="desc.invalid && desc.touched"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Valor Original (R$)</label>
+          <input type="number" [(ngModel)]="product.price" name="price" required step="0.01" />
+        </div>
+
+        <div class="form-group">
+          <label>Preço Promocional (R$)</label>
+          <input type="number" [(ngModel)]="product.promo_price" name="promo_price" step="0.01" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Categoria *</label>
+          <select [(ngModel)]="product.category_id" name="category_id" required>
+            <option value="">Selecione...</option>
+            <option value="1">Saúde</option>
+            <option value="2">Beleza</option>
+            <option value="3">Emagrecimento</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Quantidade em Estoque</label>
+          <input type="number" [(ngModel)]="product.stock_quantity" name="stock_quantity" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Imagem do Produto</label>
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          name="main_photo"
+          accept="image/*"
+          required
+        />
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" routerLink="/admin">Cancelar</button>
+        <button type="submit" class="btn-save" [disabled]="productForm.invalid">
+          Salvar Produto
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

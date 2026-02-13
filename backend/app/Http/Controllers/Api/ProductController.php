@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -15,7 +16,35 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name'           => 'required|string|max:255',
+            'description'    => 'required|string',
+            'price'          => 'required|numeric|min:0',
+            'promotional_price'    => 'nullable|numeric|min:0', 
+            'category_id'    => 'required|exists:categories,id', 
+            'stock' => 'nullable|integer|min:0', 
+            'main_photo'     => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+
+        if ($request->hasFile('main_photo')) {
+            // Salva a imagem e pega o caminho
+            $path = $request->file('main_photo')->store('products', 'public');
+            
+            // Cria o produto no banco com o nome do arquivo gerado
+            $product = Product::create([
+                'name'=> $request->name,
+                'slug'=> Str::slug($request->name), 
+                'description'=> $request->description,
+                'price'=> $request->price,
+                'promotional_price'=> $request->promotional_price,
+                'stock'=> $request->stock,
+                'category_id'=> $request->category_id,
+                'main_photo'=> $path,
+            ]);
+
+            return response()->json($product, 201);
+        }
+        return response()->json(['message' => 'Erro ao processar imagem'], 400);
     }
 
     public function show(Product $product)
@@ -28,8 +57,14 @@ class ProductController extends Controller
 
     }
 
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id) {
+        try {
+            $product = Product::findOrFail($id); 
+            $product->delete(); 
+
+            return response()->json(['message' => 'Produto excluído com sucesso!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao excluir'], 500);
+        }   
     }
 }

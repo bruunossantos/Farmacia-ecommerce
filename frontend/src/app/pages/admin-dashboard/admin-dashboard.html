@@ -1,7 +1,7 @@
 <div class="admin-container container">
   <div class="admin-header">
     <h1>Painel de Gestão - FitoFarma</h1>
-    <button class="btn-add"> + Novo Produto</button>
+    <button class="btn-add" routerLink="/admin/novo">+ Novo Produto</button>
   </div>
 
   <table class="admin-table">
@@ -15,16 +15,27 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Tylenol Paracetamol 750mg</td>
-        <td>R$ 38,79</td>
-        <td>Saúde</td>
-        <td>
-          <button class="btn-edit">✏️</button>
-          <button class="btn-delete">🗑️</button>
-        </td>
-      </tr>
+      @for (product of productService.products(); track product.id) {
+        <tr>
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>R$ {{ product.price }}</td>
+          <td>{{ product.category?.name }}</td>
+          <td class="actions-column">
+            <button class="btn-action edit" (click)="editProduct(product.id)" title="Editar Produto">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            
+            <button class="btn-action delete" (click)="deleteProduct(product.id)" title="Excluir Produto">
+                <i class="bi bi-trash"></i>
+            </button>
+            </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5" class="text-center">Nenhum produto encontrado no banco Aiven.</td>
+        </tr>
+      }
     </tbody>
   </table>
 </div>
