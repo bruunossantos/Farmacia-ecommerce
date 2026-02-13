@@ -94,15 +94,14 @@
   color: #333;
 }
 
-/* Ajuste para telas menores (Responsividade) */
 @media (max-width: 992px) {
   .product-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 por linha em tablets */
+    grid-template-columns: repeat(2, 1fr); 
   }
 }
 
 @media (max-width: 576px) {
   .product-grid {
-    grid-template-columns: 1fr; /* 1 por linha em celulares */
+    grid-template-columns: 1fr; 
   }
 }

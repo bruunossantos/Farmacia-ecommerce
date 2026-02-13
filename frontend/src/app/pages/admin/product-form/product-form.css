@@ -42,7 +42,7 @@ textarea {
 }
 
 input.invalid, textarea.invalid {
-  border-color: #dc3545; /* Vermelho para erro */
+  border-color: #dc3545; 
 }
 
 .btn-save:disabled {

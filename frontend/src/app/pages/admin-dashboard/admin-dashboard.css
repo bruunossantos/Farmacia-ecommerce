@@ -57,8 +57,8 @@
   transition: 0.2s;
 }
 
-.btn-edit { color: #005a32; } /* Verde FitoFarma */
-.btn-delete { color: #dc3545; } /* Vermelho erro */
+.btn-edit { color: #005a32; } 
+.btn-delete { color: #dc3545; } 
 
 .btn-icon:hover {
   transform: scale(1.2);
