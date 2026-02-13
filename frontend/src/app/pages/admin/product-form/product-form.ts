@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-product-form',
@@ -11,9 +12,14 @@ import { ProductService } from '../../../services/product';
   templateUrl: './product-form.html',
   styleUrl: './product-form.css',
 })
-export class ProductForm {
+export class ProductForm implements OnInit{
   private productService = inject(ProductService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
+
+  isEditMode = false;
+  productId: string | null = null;
 
   product = {
     name: '',
@@ -27,6 +33,23 @@ export class ProductForm {
 
   selectedFile: File | null = null;
 
+  ngOnInit() {
+    this.productId = this.route.snapshot.paramMap.get('id');
+    if (this.productId) {
+      this.isEditMode = true;
+      this.loadProduct(this.productId);
+    }
+  }
+
+  loadProduct(id: string) {
+    this.productService.getProductById(id).subscribe({
+      next: (data) => {
+        this.product = { ...data, promo_price: data.promotional_price, stock_quantity: data.stock };
+        this.cdr.detectChanges(); 
+      }
+    });
+  }
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file) {
@@ -36,7 +59,6 @@ export class ProductForm {
 
   saveProduct() {
     const formData = new FormData();
-  
     formData.append('name', this.product.name);
     formData.append('description', this.product.description);
     formData.append('price', (this.product.price ?? '').toString());
@@ -51,12 +73,25 @@ export class ProductForm {
       formData.append('main_photo', this.selectedFile);
     }
 
-    this.productService.createProduct(formData).subscribe({
-      next: () => {
-        alert('Produto cadastrado com sucesso!');
-        this.router.navigate(['/admin']);
-      },
-      error: (err: any) => console.error('Erro ao salvar:', err)
-    });
+    // Edição ou Cadastro
+    if (this.isEditMode && this.productId) {
+      formData.append('_method', 'PUT'); 
+
+      this.productService.updateProduct(this.productId, formData).subscribe({
+        next: () => {
+          alert('Produto atualizado com sucesso!');
+          this.router.navigate(['/admin']);
+        },
+        error: (err: any) => console.error('Erro ao atualizar:', err)
+      });
+    } else {
+      this.productService.createProduct(formData).subscribe({
+        next: () => {
+          alert('Produto cadastrado com sucesso!');
+          this.router.navigate(['/admin']);
+        },
+        error: (err: any) => console.error('Erro ao cadastrar:', err)
+      });
+    }
   }
 }

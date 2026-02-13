@@ -47,15 +47,37 @@ class ProductController extends Controller
         return response()->json(['message' => 'Erro ao processar imagem'], 400);
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
-        return $product->load('category');
-        return Product::where('slug', $slug)->firstOrFail();
+        return Product::findOrFail($id);
     }
 
     public function update(Request $request, string $id)
     {
+        $product = Product::findOrFail($id);
 
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'category_id' => 'required|exists:categories,id',
+        ]);
+        
+        // Atualiza os campos
+        $product->name = $request->name;
+        $product->slug = Str::slug($request->name);
+        $product->description = $request->description; 
+        $product->price = $request->price;
+        $product->promotional_price = $request->promotional_price;
+        $product->stock = $request->stock;
+        $product->category_id = $request->category_id;
+
+        if ($request->hasFile('main_photo')) {
+            $path = $request->file('main_photo')->store('products', 'public');
+            $product->main_photo = $path;
+        }
+
+        $product->save();
+        return response()->json($product);
     }
 
     public function destroy($id) {
@@ -74,5 +96,21 @@ class ProductController extends Controller
         $product = Product::where('slug', $slug)->firstOrFail();
         
         return response()->json($product);
+    }
+
+    public function search($query)
+    {
+        $terms = explode(' ', $query);
+
+        $products = Product::query();
+
+        foreach ($terms as $term) {
+            $products->where(function ($query) use ($term) {
+                $query->where('name', 'LIKE', '%' . $term . '%')
+                    ->orWhere('description', 'LIKE', '%' . $term . '%');
+            });
+        }
+
+        return response()->json($products->get());
     }
 }

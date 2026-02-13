@@ -1,0 +1,17 @@
+<div class="container search-page">
+  <h2 class="search-title">
+    Resultados para: "<span>{{ query() }}</span>"
+  </h2>
+
+  <div class="product-grid">
+    @for (item of results(); track item.id) {
+      <app-product-card [product]="item"></app-product-card>
+    } @empty {
+      <div class="no-results">
+        <i class="bi bi-search"></i>
+        <p>Não encontramos nenhum produto com esse nome no banco Aiven.</p>
+        <a routerLink="/" class="btn-back">Ver todas as ofertas</a>
+      </div>
+    }
+  </div>
+</div>

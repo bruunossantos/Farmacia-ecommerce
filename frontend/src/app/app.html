@@ -4,8 +4,13 @@
       <img src="assets\img\logo-fitofarma.jpg" alt="FitoFarma">
     </div>
     <div class="search-bar">
-      <i class="bi bi-search search-icon"></i>
-      <input type="text" placeholder="Pesquisar...">
+      <i class="bi bi-search search-icon" (click)="performSearch()"></i>
+      <input 
+        type="text" 
+        placeholder="Pesquisar..." 
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="performSearch()"
+      >
     </div>
     <nav class="main-nav">
       <a routerLink="/">HOME</a>

@@ -32,7 +32,19 @@ export class ProductService {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
 
+  updateProduct(id: string, data: FormData) {
+    return this.http.post(`${this.apiUrl}/${id}`, data);
+  }
+
   getProductsBySlug(slug: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/slug/${slug}`);
+  }
+
+  getProductById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  searchProducts(query: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/search/${query}`);
   }
 }
