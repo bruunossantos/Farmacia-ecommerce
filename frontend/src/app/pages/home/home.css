@@ -66,6 +66,34 @@
   padding: 0 10px;
 }
 
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 40px auto;
+}
+
+.pagination-container button {
+  background-color: #005a32;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.pagination-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-container span {
+  font-weight: 600;
+  color: #333;
+}
+
 /* Ajuste para telas menores (Responsividade) */
 @media (max-width: 992px) {
   .product-grid {

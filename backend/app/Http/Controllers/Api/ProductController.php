@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Product::with('category')->paginate(8);
+        return Product::orderBy('created_at', 'desc')->paginate(8);
     }
 
     public function store(Request $request)
@@ -50,6 +50,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         return $product->load('category');
+        return Product::where('slug', $slug)->firstOrFail();
     }
 
     public function update(Request $request, string $id)
@@ -66,5 +67,12 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao excluir'], 500);
         }   
+    }
+
+    public function showBySlug($slug)
+    {
+        $product = Product::where('slug', $slug)->firstOrFail();
+        
+        return response()->json($product);
     }
 }

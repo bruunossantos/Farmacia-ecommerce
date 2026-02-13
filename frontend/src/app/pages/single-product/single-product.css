@@ -1,0 +1,64 @@
+.product-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-top: 50px;
+  align-items: center;
+}
+
+.product-image img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.product-details {
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.current-price {
+  font-size: 2.5rem;
+  color: #005a32;
+  font-weight: 800;
+  display: block;
+  margin: 20px 0;
+}
+
+.price-container {
+  display: flex;
+  align-items: baseline; 
+  gap: 15px;
+  margin: 20px 0;
+}
+
+/* Preço original */
+.old-price {
+  font-size: 1.1rem;
+  color: #888;
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+/* Preço promocional */
+.current-price {
+  font-size: 2.2rem;
+  color: #005a32; 
+  font-weight: 800;
+}
+
+.btn-buy {
+  background-color: #66c19f;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}

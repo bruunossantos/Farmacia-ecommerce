@@ -5,10 +5,15 @@
     <div class="card-content">
         <h3 class="product-title">{{ product().name }}</h3>
         <div class="price-container">
-            <span class="currency">R$</span>
-            <span class="price-value">{{ product().price }}</span>
+            @if (product().promotional_price) {
+                <span class="old-price">R$ {{ product().price }}</span>
+                <span class="current-price">R$ {{ product().promotional_price }}</span>
+            } @else {
+                <span class="current-price">R$ {{ product().price }}</span>
+            }
         </div>
-        <button class="btn-more">
+        
+        <button class="btn-more" [routerLink]="['/produto', product().slug]">
             Ver mais
             <span class="arrow">-></span>
         </button>

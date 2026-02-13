@@ -1,6 +1,6 @@
 <section class="container">
   <div class="main-banner">
-    <img src="assets/img/banner-1.jpg" alt="Saúde e Bem-estar - Melhores Ofertas">
+    <img src="assets/img/banner-1.jpg" alt="Saúde e Bem-estar - Melhores Ofertas" />
   </div>
 </section>
 
@@ -8,55 +8,68 @@
   <div class="categories-section">
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Ofertas.jpg" alt="Ofertas">
+        <img src="assets/img/categorias/Ofertas.jpg" alt="Ofertas" />
       </div>
       <h4>Ofertas</h4>
     </div>
-    
+
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Emagrecimento.jpg" alt="Emagrecimento">
+        <img src="assets/img/categorias/Emagrecimento.jpg" alt="Emagrecimento" />
       </div>
       <h4>Emagrecimento</h4>
     </div>
 
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Beleza.jpg" alt="Beleza">
+        <img src="assets/img/categorias/Beleza.jpg" alt="Beleza" />
       </div>
       <h4>Beleza</h4>
     </div>
 
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Seu treino.jpg" alt="Seu treino">
+        <img src="assets/img/categorias/Seu treino.jpg" alt="Seu treino" />
       </div>
       <h4>Seu treino</h4>
     </div>
 
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Saúde.jpg" alt="Saúde">
+        <img src="assets/img/categorias/Saúde.jpg" alt="Saúde" />
       </div>
       <h4>Saúde</h4>
     </div>
 
     <div class="category-item">
       <div class="category-circle">
-        <img src="assets/img/categorias/Mais vendidos.jpg" alt="Mais vendidos">
+        <img src="assets/img/categorias/Mais vendidos.jpg" alt="Mais vendidos" />
       </div>
       <h4>Mais vendidos</h4>
     </div>
-
   </div>
 </section>
 
 <div class="product-grid container">
-  @for (item of productService.products().slice(0, 8); track item.id) {
+  @for (item of productService.products(); track item.id) {
     <app-product-card [product]="item"></app-product-card>
-  } @empty {
-    <div class="loading-state">
-      <p>Buscando as melhores ofertas...</p>
-    </div>
   }
+</div>
+
+<div class="pagination-container container">
+  <button
+    [disabled]="productService.currentPage() === 1"
+    (click)="changePage(productService.currentPage() - 1)"
+  >
+    <i class="bi bi-chevron-left"></i> Anterior
+  </button>
+
+  <span>Página {{ productService.currentPage() }} de {{ productService.lastPage() }}</span>
+
+  <button
+    [disabled]="productService.currentPage() === productService.lastPage()"
+    (click)="changePage(productService.currentPage() + 1)"
+  >
+    Próxima <i class="bi bi-chevron-right"></i>
+  </button>
 </div>

@@ -23,9 +23,25 @@
   line-height: 1.2;
 }
 
-.price-value {
-  color: #3fae8e; 
+.price-container {
+  display: flex;
+  align-items: baseline; 
+  gap: 15px;
+  margin: 20px 0;
+}
+
+/* Preço original */
+.old-price {
+  font-size: 0.8rem;
+  color: #888;
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+/* Preço promocional */
+.current-price {
   font-size: 1.5rem;
+  color: #005a32; 
   font-weight: 800;
 }
 

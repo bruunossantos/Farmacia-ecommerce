@@ -1,0 +1,28 @@
+@if (product()) {
+    <section class="container">
+        <div class="product-main">
+            <div class="product-image">
+                <img [src]="'http://localhost:8000/storage/' + product().main_photo" [alt]="product().name">
+            </div>
+            <div class="product-details">
+                <h1>{{ product().name }}</h1>
+                <p class="description">{{ product().description }}</p>
+
+                <div class="price-container">
+                    @if (product().promotional_price) {
+                        <span class="old-price">R$ {{ product().price }}</span>
+                        <span class="current-price">R$ {{ product().promotional_price }}</span>
+                    } @else {
+                        <span class="current-price">R$ {{ product().price }}</span>
+                    }
+                </div>
+
+                <button class="btn-buy">
+                    Comprar <i class="bi bi-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+} @else {
+  <p class="container">Carregando detalhes do produto...</p>
+}

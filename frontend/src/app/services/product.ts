@@ -15,16 +15,24 @@ export class ProductService {
     return this.http.post(this.apiUrl, product);
   }
 
-  getProducts() {
-    return this.http.get<any>(this.apiUrl).pipe(
+  currentPage = signal<number>(1);
+  lastPage = signal<number>(1);
+
+  getProducts(page: number = 1) {
+    return this.http.get<any>(`${this.apiUrl}?page=${page}`).pipe(
       tap((res) => {
-        const productList = res.data ? res.data : res;
-        this.products.set(productList);
+        this.products.set(res.data);
+        this.currentPage.set(res.current_page);
+        this.lastPage.set(res.last_page);
       }),
     );
   }
 
   deleteProduct(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  getProductsBySlug(slug: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/slug/${slug}`);
   }
 }

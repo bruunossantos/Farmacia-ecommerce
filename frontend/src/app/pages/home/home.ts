@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product';
-import { ProductCard } from '../../components/product-card/product-card'; 
+import { ProductCard } from '../../components/product-card/product-card';
 
 @Component({
   selector: 'app-home',
@@ -9,13 +9,17 @@ import { ProductCard } from '../../components/product-card/product-card';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-
 export class HomeComponent implements OnInit {
   protected productService = inject(ProductService);
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
-      error: (err) => console.error('Erro ao carregar vitrine:', err)
+      error: (err) => console.error('Erro ao carregar vitrine:', err),
     });
+  }
+
+  changePage(newPage: number) {
+    this.productService.getProducts(newPage).subscribe();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
