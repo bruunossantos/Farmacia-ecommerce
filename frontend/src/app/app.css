@@ -83,3 +83,15 @@
 .nav-categories a:hover {
   opacity: 0.8;
 }
+
+.main-footer {
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #004d2c;
+  color: #fff;
+}
+
+.main-footer p{
+  text-align: center; 
+  justify-content: center;
+}
